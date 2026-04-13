@@ -52,7 +52,7 @@ If the user provides a writing sample (their own previous writing), analyze it b
 
 ## Research Writing Mode
 
-Activate this mode when the input is academic, scientific, or PhD-level writing. It adds a **planning phase** before editing and enforces research-voice rules in addition to the standard patterns.
+Activate this mode when the input is academic or scientific writing. It adds a **planning phase** before editing and enforces research-voice rules in addition to the standard patterns.
 
 ---
 
@@ -462,6 +462,62 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 > He said "the project is on track" but others disagreed.
 
 
+## AI DETECTION PATTERNS
+
+These patterns are specifically weighted by AI detection tools (GPTZero, Turnitin AI, Copyleaks, Originality.ai). Fix these first — they carry the highest detection risk for academic writing.
+
+### 30. Sequential "The" Starts
+
+**Problem:** Three or more consecutive sentences beginning with "The" is a strong AI signal — humans naturally vary their sentence openers.
+
+**Before:**
+> The system uses JWKS. The token is validated on each request. The secret is not stored locally.
+
+**After:**
+> The system uses JWKS for token validation. Each request is checked individually, and no secret is stored locally.
+
+---
+
+### 31. Templated Transitions
+
+**Words to watch:** This raises a deeper issue, It is worth noting, A more fundamental question remains, It is important to acknowledge, This underscores the need
+
+**Problem:** These phrases appear so consistently in AI text that detectors flag them as high-signal markers, even when used once.
+
+**Before:**
+> It is worth noting that the model performs differently under high load. This raises a deeper issue about reliability at scale.
+
+**After:**
+> The model performs differently under high load — a reliability problem that scales with traffic, not just complexity.
+
+---
+
+### 32. False Precision
+
+**Problem:** Specific-looking numbers without a source ("approximately 73.4% of studies") signal AI generation — humans either cite a real number or speak in approximate terms.
+
+**Before:**
+> Studies show that approximately 67.3% of maritime incidents occur during adverse weather conditions.
+
+**After:**
+> Most maritime incidents occur during adverse weather, according to [Source].
+
+---
+
+### 33. Parallel Triples
+
+**Problem:** Three-part parallel constructions in close succession — especially binary oppositions — are a strong AI detection signal. Already covered partially under Rule of Three (Pattern 10), but the binary form is more specific.
+
+**Words to watch:** "X or Y, A or B, C or D" structures; "permit or block", "safe or unsafe", "constrain or unconstrain"
+
+**Before:**
+> The system must decide: permit or block, act or defer, constrain or unconstrain.
+
+**After:**
+> The system must decide whether to act, and if so, within what constraints.
+
+---
+
 ## COMMUNICATION PATTERNS
 
 ### 20. Collaborative Communication Artifacts
@@ -598,34 +654,47 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 ## Process
 
 1. Read the input text carefully
-2. Identify all instances of the patterns above
-3. Rewrite each problematic section
-4. Ensure the revised text:
+2. **Run AI Detection baseline** (see ai-detection.md) — score perplexity, burstiness, lexical diversity, stylistic markers, and evidence density before editing. Note the estimated AI percentage.
+3. Identify all instances of the patterns above — prioritise Patterns 30–33 (AI Detection Patterns) first
+4. Rewrite each problematic section
+5. Ensure the revised text:
    - Sounds natural when read aloud
    - Varies sentence structure naturally
    - Uses specific details over vague claims
    - Maintains appropriate tone for context
    - Uses simple constructions (is/are/has) where appropriate
-5. Present a draft humanized version
-6. Prompt: "What makes the below so obviously AI generated?"
-7. Answer briefly with the remaining tells (if any)
-8. Prompt: "Now make it not obviously AI generated."
-9. Present the final version (revised after the audit)
+6. Present a draft humanized version
+7. Prompt: "What makes the below so obviously AI generated?"
+8. Answer briefly with the remaining tells (if any)
+9. Prompt: "Now make it not obviously AI generated."
+10. **Run AI Detection again** — confirm the estimated AI percentage dropped. If not, identify which signals remain and fix them.
+11. Present the final version (revised after the audit)
 
-**If Research Writing Mode is active, add step 10:**
+**If Research Writing Mode is active, add step 12:**
 
-10. Run the Research Voice Audit (see Research Writing Mode section). Flag any remaining issues from R1–R7 before declaring done.
+12. Run the Research Voice Audit (see Research Writing Mode section). Flag any remaining issues from R1–R7 before declaring done.
 
 ## Output Format
 
 Provide:
-1. Draft rewrite
-2. "What makes the below so obviously AI generated?" (brief bullets)
-3. Final rewrite
-4. A brief summary of changes made (optional, if helpful)
+1. **AI Detection baseline** (if detection mode active):
 
+| Metric | Score | Notes |
+|---|---|---|
+| Perplexity | High / Medium / Low | |
+| Burstiness | High / Medium / Low | |
+| Lexical diversity | High / Medium / Low | |
+| AI markers found | list | |
+| Evidence density | High / Medium / Low | |
+| Estimated AI % | e.g. 30–40% | |
 
-## PhD Literature Review Checklist
+2. Draft rewrite
+3. "What makes the below so obviously AI generated?" (brief bullets)
+4. Final rewrite
+5. **AI Detection after** (same table format — show improvement)
+6. Brief summary of changes made (optional)
+
+## Academic Literature Review Checklist
 
 Use this before finalising any literature review chapter or gap analysis section.
 
