@@ -14,9 +14,12 @@ The “runtime” artifact is `SKILL.md`: Claude Code reads the YAML frontmatter
   - The actual skill definition.
   - Starts with YAML frontmatter (`---` … `---`) containing `name`, `version`, `description`, and `allowed-tools`.
   - After the frontmatter is the editor prompt: the canonical, detailed pattern list with examples.
+- `ai-detection.md`
+  - Supporting reference for AI detection scoring (perplexity, burstiness, lexical diversity, stylistic markers, evidence density).
+  - Referenced by SKILL.md in the Process steps. Must be installed alongside SKILL.md.
 - `README.md`
   - Installation and usage instructions.
-  - Contains a summarized “25 patterns” table and a short version history.
+  - Contains a summarized “33 patterns” table and a short version history.
 
 When changing behavior/content, treat `SKILL.md` as the source of truth, and update `README.md` to stay consistent.
 
@@ -25,13 +28,13 @@ When changing behavior/content, treat `SKILL.md` as the source of truth, and upd
 Recommended (clone directly into Claude Code skills directory):
 ```bash
 mkdir -p ~/.claude/skills
-git clone https://github.com/blader/humanizer.git ~/.claude/skills/humanizer
+git clone https://github.com/kandaiiskandar/humanizer.git ~/.claude/skills/humanizer
 ```
 
-Manual install/update (only the skill file):
+Manual install/update:
 ```bash
 mkdir -p ~/.claude/skills/humanizer
-cp SKILL.md ~/.claude/skills/humanizer/
+cp SKILL.md ai-detection.md ~/.claude/skills/humanizer/
 ```
 
 ## How to “run” it (Claude Code)
