@@ -1,13 +1,7 @@
 ---
 name: humanizer
 version: 2.5.1
-description: |
-  Remove signs of AI-generated writing from text. Use when editing or reviewing
-  text to make it sound more natural and human-written. Based on Wikipedia's
-  comprehensive "Signs of AI writing" guide. Detects and fixes patterns including:
-  inflated symbolism, promotional language, superficial -ing analyses, vague
-  attributions, em dash overuse, rule of three, AI vocabulary words, passive
-  voice, negative parallelisms, and filler phrases.
+description: Use when editing or reviewing text to remove AI writing patterns, or when planning and refining research or academic writing to sound more natural and human.
 license: MIT
 compatibility: claude-code opencode
 allowed-tools:
@@ -55,6 +49,144 @@ If the user provides a writing sample (their own previous writing), analyze it b
 - Inline: "Humanize this text. Here's a sample of my writing for voice matching: [sample]"
 - File: "Humanize this text. Use my writing style from [file path] as a reference."
 
+
+## Research Writing Mode
+
+Activate this mode when the input is academic, scientific, or PhD-level writing. It adds a **planning phase** before editing and enforces research-voice rules in addition to the standard patterns.
+
+---
+
+### Planning Phase (Before Writing)
+
+When the author has not yet written the text, work through these before touching a sentence:
+
+**1. Argument map**
+- What is the single core claim?
+- What evidence from the literature supports it?
+- Where is the gap no existing work fills?
+
+**2. Gap statement**
+Ask the author: can you state in one sentence what no existing work does? If not, the gap is not ready to write yet.
+
+> Template: "No [method/system/architecture] identified in this review [does X], despite [Y real-world consequence]."
+
+**3. Contribution framing**
+Write three concrete, falsifiable contributions — not "we propose":
+
+❌ "We propose a framework for..."
+✅ "We define a formal model E = {w, r, m, o, v, t} that captures..."
+✅ "We show empirically that X reduces Y by Z% under condition C."
+
+**4. Section intent**
+For each planned section, write one sentence stating what it must *prove* — not just cover.
+
+> Example: "Section 2 proves that existing governance mechanisms are binary and do not account for environmental state."
+
+Only start writing once all four are clear.
+
+---
+
+### Research Voice Rules
+
+Apply these when editing academic text, in addition to the standard AI-pattern rules.
+
+**Rule R1 — Observational voice, not imposed argument**
+
+The argument must read as discovered from the literature, not constructed to fit a conclusion.
+
+❌ Repeated gap-assertion pattern:
+> No system implements…
+> No architecture defines…
+> No method provides…
+
+✅ Varied observational framing:
+> Across the reviewed studies, no system was found to implement…
+> No architecture identified in this review defines…
+> The reviewed literature does not provide evidence of…
+
+Do not reuse the same gap-assertion frame more than twice in succession.
+
+---
+
+**Rule R2 — Qualify universal claims**
+
+Absolute claims ("none", "no system", "every method") are vulnerable to a single counter-example. Scope them to the review.
+
+❌ "No system implements…"
+✅ "No system identified in this review implements…"
+
+❌ "Universal across all domains"
+✅ "Consistently observed across the reviewed studies"
+
+The claim stays strong. One counter-example outside the review does not invalidate it.
+
+---
+
+**Rule R3 — Bridge adjacent sections**
+
+Sections must not feel like separated boxes. Add a sentence at each boundary that connects the outgoing topic to the incoming one.
+
+❌ Hard cut:
+> [End of 2.2]: "Level 1 is addressed. Level 2 is not."
+> [Start of 2.3]: "A parallel body of literature addresses…"
+
+✅ Bridged:
+> [End of 2.2]: "While these mechanisms determine whether AI acts, they do not address how decision authority is distributed once AI participation is allowed."
+> [Start of 2.3]: "A parallel body of literature addresses…"
+
+---
+
+**Rule R4 — Push gaps through practical consequence**
+
+Do not just catalogue what is missing. Show why existing approaches are insufficient *in practice*, using empirical evidence already in the review.
+
+❌ Flat gap: "This is a limitation."
+✅ With consequence: "This is not only a conceptual limitation. In practice, it creates conditions where users receive full-scope recommendations precisely when reliability is lowest."
+
+---
+
+**Rule R5 — Anchor the argument early**
+
+Add one sentence near the start of a chapter that tells the reader where the argument is heading.
+
+> Example: "This chapter examines how existing systems control AI behaviour under risk, and shows that current approaches address participation and output validation separately but do not unify them under environmental state."
+
+The anchor does not state the gap — it frames the question so the reader knows what to watch for.
+
+---
+
+**Rule R6 — Controlled uncertainty**
+
+Occasionally express genuine interpretive uncertainty. One or two times per chapter, not per section.
+
+Allowed:
+- "This appears to be…"
+- "The evidence suggests, though does not conclusively demonstrate, that…"
+- "One possible interpretation is…"
+
+Too much hedging weakens the argument. The goal is a researcher thinking, not systematic doubt.
+
+---
+
+**Rule R7 — Signal the core concept early**
+
+If a key concept (e.g. a new mode, model, or term) will be introduced later, seed it lightly by the second or third section. One sentence only — do not explain fully yet. Prepare the reader before the full definition arrives.
+
+> Example: "This suggests the need for an intermediate operational mode — one where AI participation is allowed but within a restricted scope."
+
+---
+
+### Research Voice Audit
+
+After applying all rules, ask:
+- Does the argument read as discovered from evidence, or imposed on a conclusion?
+- Are all universal claims scoped to the review?
+- Is the contribution anchored in the first section?
+- Do adjacent sections bridge, or hard-cut?
+- Is there at least one practical-consequence statement with empirical data?
+- Is the key concept seeded before it is formally defined?
+
+---
 
 ## PERSONALITY AND SOUL
 
@@ -480,6 +612,10 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 8. Prompt: "Now make it not obviously AI generated."
 9. Present the final version (revised after the audit)
 
+**If Research Writing Mode is active, add step 10:**
+
+10. Run the Research Voice Audit (see Research Writing Mode section). Flag any remaining issues from R1–R7 before declaring done.
+
 ## Output Format
 
 Provide:
@@ -488,6 +624,22 @@ Provide:
 3. Final rewrite
 4. A brief summary of changes made (optional, if helpful)
 
+
+## PhD Literature Review Checklist
+
+Use this before finalising any literature review chapter or gap analysis section.
+
+- [ ] Core concept is seeded lightly before it is formally defined (Rule R7)
+- [ ] Anchor sentence appears within the first section (Rule R5)
+- [ ] No gap-assertion pattern repeats more than twice consecutively (Rule R1)
+- [ ] All universal claims are qualified with review scope (Rule R2)
+- [ ] At least two bridge sentences connect adjacent sections (Rule R3)
+- [ ] At least one practical-consequence statement uses empirical data (Rule R4)
+- [ ] At least one sentence expresses genuine interpretive uncertainty (Rule R6)
+- [ ] Section transitions show conceptual overlap, not hard cuts
+- [ ] Argument reads as discovered from evidence, not imposed on it
+
+---
 
 ## Full Example
 
