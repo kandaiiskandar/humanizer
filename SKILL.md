@@ -1,6 +1,6 @@
 ---
 name: humanizer
-version: 2.5.1
+version: 2.6.0
 description: Use when editing or reviewing text to remove AI writing patterns, or when planning and refining research or academic writing to sound more natural and human.
 license: MIT
 compatibility: claude-code opencode
